@@ -38,16 +38,15 @@ set showmode
 " 显示相对行号
 set relativenumber
 
-set wrap "自动折行
-
 set scrolloff=3
 " 设置命令历史记录条数
 set history=100000
 " 中英文自动切换,这里使用 IdeaVimExtension 插件可解决
-set keep-english-in-normal-and-restore-in-insert
+":set keep-english-in-normal-and-restore-in-insert
 
 " clear the highlighted search result
 nnoremap <esc> :nohlsearch<cr>
+inoremap jj <Esc>
 
 " previous method
 noremap [[ <ESC>:action MethodUp<CR>
@@ -56,18 +55,25 @@ noremap ]] <ESC>:action MethodDown<CR>
 
 nnoremap <silent> <S-j> 6j
 nnoremap <silent> <S-k> 6k
+" 映射 Cmd + J 到 Ctrl + Option + J
+nnoremap <D-j> <C-<M-j>>
 
 " Window operation
+" 光标跳转到下一个窗口
 nnoremap <Leader>ww <C-W>w
+" 关闭当前窗口
 nnoremap <Leader>wd <C-W>c
+" 窗口光标切换
 nnoremap <Leader>wj <C-W>j
 nnoremap <Leader>wk <C-W>k
 nnoremap <Leader>wh <C-W>h
 nnoremap <Leader>wl <C-W>l
+" 拆分水平窗口
 nnoremap <Leader>ws <C-W>s
-" nnoremap <Leader>w- <C-W>s
+" 拆分垂直窗口
 nnoremap <Leader>wv <C-W>v
-" nnoremap <Leader>w\| <C-W>v
+" 在普通模式下，将 ,u 映射为取消拆分窗口
+nnoremap <Leader>u :action UnsplitAll<CR>
 
 " Tab operation
 nnoremap tn gt
@@ -88,10 +94,6 @@ nnoremap <Leader>;; :action CommentByLineComment<CR>
 
 nnoremap <Leader>cv :action ChangeView<CR>
 
-
-" 隐藏激活窗口
-nnoremap <Leader>h :action HideActiveWindow<CR>
-
 " 跳转
 nnoremap ga :action GotoAction<CR>
 nnoremap gc :action GotoClass<CR>
@@ -105,37 +107,30 @@ nnoremap fp :action FindInPath<CR>
 "nnoremap <Leader>gs :action FileStructurePopup<CR>
 
     " 打开变量结构信息
-" 显示当前文件的文件路径
-nnoremap <Leader>fp :action ShowFilePath<CR>
-
-nnoremap <Leader>ic :action InspectCode<CR>
-
-nnoremap <Leader>pm :action ShowPopupMenu<CR>
 
 " 运行和调试
 nnoremap <Leader>rc :action RunToCursor<CR>
+" 打开运行窗口
 nnoremap <Leader>rC :action ChooseRunConfiguration<CR>
+" 运行
 nnoremap <Leader>rr :action Rerun<CR>
-
+" 查看所有断点
 nnoremap <Leader>br :action ViewBreakpoints<CR>
+" 打开调试窗口
 nnoremap <Leader>cd :action ChooseDebugConfiguration<CR>
+// 添加调试点
 nnoremap <Leader>bb :action ToggleLineBreakpoint<CR>
 
 " 重命名
 nnoremap <Leader>re :action RenameElement<CR>
 nnoremap <Leader>rf :action RenameFile<CR>
 
-nnoremap <Leader>se :action SearchEverywhere<CR>
-nnoremap <Leader>su :action ShowUsages<CR>
-nnoremap <Leader>tc :action CloseActiveTab<CR>
-nnoremap <Leader>si :action StepInto<CR>
-
-nnoremap <Leader>tb :action ToggleLineBreakpoint<CR>
-
-nnoremap <Leader>tt <CR>:action ActivateTerminalToolWindow<CR>
-
-
-nnoremap <Leader>fu :action FindUsages<CR>
+"nnoremap <Leader>si :action StepInto<CR>
+"nnoremap <Leader>su :action ShowUsages<CR>
+"nnoremap <Leader>tc :action CloseActiveTab<CR>
+"nnoremap <Leader>tb :action ToggleLineBreakpoint<CR>
+"nnoremap <Leader>tt <CR>:action ActivateTerminalToolWindow<CR>
+"nnoremap <Leader>fu :action FindUsages<CR>
 
 " 复制短暂显示高亮
 set highlightedyank
@@ -161,3 +156,25 @@ noremap <A-O> :action GotoPreviousError<CR>
     " 上一个错误，idea快捷键：<S-F2>
 noremap <A-I> :action GotoNextError<CR>
     " 下一个错误，idea快捷键：<F2>
+
+"" Enable VimMulticursor
+set multicursor
+
+" Quick search-select
+map <Leader>q <Plug>(multicursor-ms/)
+
+" Quick cursor add/apply
+map <Leader>z <Plug>(multicursor-mcc)
+map <Leader>Z <Plug>(multicursor-mci)
+
+" Word-based selections
+"map <Leader>w <Plug>(multicursor-msw)
+"map <Leader>b <Plug>(multicursor-msb)
+"map <Leader>d <Plug>(multicursor-mcd)
+"map <Leader>r <Plug>(multicursor-mcr)
+
+" mc/ + 搜索：在所有出现的搜索正则表达式处添加光标。
+" z ：在当前位置添加或删除光标高亮（预览模式）
+" mcc ：在当前位置添加或删除光标高亮（预览模式）
+" mcr ：将光标突出显示转换为活动编辑光标
+" mcd ：删除所有光标和高亮
